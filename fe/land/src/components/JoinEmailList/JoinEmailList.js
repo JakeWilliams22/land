@@ -25,11 +25,30 @@ class JoinEmailList extends React.Component {
         console.log("Join Email List with email " + this.state.email);
     };
 
+    showThanks = () => {
+      this.setState({"email":this.props.thanks || "Thanks!"});
+    };
+
+    submit = (event) => {
+        event.preventDefault();
+        this.joinList(event);
+        this.showThanks();
+    };
+
     render = () =>
         (
             <div className="JoinEmailList">
-                <Input value={this.state.email} onChange={this.handleChange} error={!this.state.valid}>Test</Input>
-                <Button onClick={this.joinList}>{this.props.joinText || "Join"}</Button>
+                <form autoComplete="on" onSubmit={this.submit}>
+                    <Input
+                        name={"email"}
+                        value={this.state.email}
+                        onChange={this.handleChange}
+                        error={!this.state.valid}
+                        placeholder={this.props.placeHolder || "Enter Your Email"}
+                        autoComplete={"JEL email"}
+                        type="email"/>
+                    <Button type="submit">{this.props.joinText || "Join"}</Button>
+                </form>
             </div>
         )
 }
