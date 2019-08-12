@@ -11,3 +11,4 @@ An landing page customer discovery.
 ## Integrations
 - Google Analytics
 - Mailchimp
+- Surveymonkey
