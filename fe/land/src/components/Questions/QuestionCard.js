@@ -2,6 +2,7 @@ import React from 'react';
 import './QuestionCard.css';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
+import MultipleChoice from './MultipleChoice';
 
 class QuestionCard extends React.Component {
     constructor(props) {
@@ -19,8 +20,16 @@ class QuestionCard extends React.Component {
     getQuestions = () => {
         // TODO(W) Fetch questions from server
         // TODO(W) Format them into ReactNodes
-        let q1 = <p onClick={this.nextQuestion}>Q1</p>;
-        let q2 = <p onClick={this.nextQuestion}>Q2</p>;
+        let q1 = <MultipleChoice
+            action={this.nextQuestion}
+            question={"Gender"}
+            options={["M","F","IDFK"]}
+            ID={"0"}/>;
+        let q2 = <MultipleChoice
+            action={this.nextQuestion}
+            question={"Problems"}
+            options={["99 of em but not bitches","Bitches"]}
+            ID={"1"}/>;
         this.setState({'questions': [q1, q2]});
     };
 
