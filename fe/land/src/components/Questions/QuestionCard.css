@@ -7,6 +7,21 @@
 }
 
 .QuestionTitle {
+    margin: 5px;
+    text-align: left;
+    font-size: calc(5px + 2vmin);
+}
+
+.MuiFormControlLabel-label  {
+    color: gray;
+    font-size: calc(3px + 2vmin);
+}
+
+.OpenEndedQuestionContent {
+    align-items : center;}
+
+.OpenEndedInput {
+    width:100%;
     margin:5px;
     text-align:left;
 }

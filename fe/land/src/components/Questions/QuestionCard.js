@@ -3,6 +3,7 @@ import './QuestionCard.css';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import MultipleChoice from './MultipleChoice';
+import OpenEnded from "./OpenEnded";
 
 class QuestionCard extends React.Component {
     constructor(props) {
@@ -20,6 +21,9 @@ class QuestionCard extends React.Component {
     getQuestions = () => {
         // TODO(W) Fetch questions from server
         // TODO(W) Format them into ReactNodes
+        let q0 = <OpenEnded
+            action={this.nextQuestion}
+            question={"What sucks for you"}/>
         let q1 = <MultipleChoice
             action={this.nextQuestion}
             question={"Gender"}
@@ -30,7 +34,7 @@ class QuestionCard extends React.Component {
             question={"Problems"}
             options={["99 of em but not bitches","Bitches"]}
             ID={"1"}/>;
-        this.setState({'questions': [q1, q2]});
+        this.setState({'questions': [q0, q1, q2]});
     };
 
     nextQuestion = () => {
