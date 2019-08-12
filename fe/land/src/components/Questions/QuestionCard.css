@@ -5,3 +5,8 @@
 .QuestionCard {
     width: 80%;
 }
+
+.QuestionTitle {
+    margin:5px;
+    text-align:left;
+}
