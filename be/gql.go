@@ -16,6 +16,10 @@ type Server struct {
 type Args struct {
 }
 
+type LandingPageMutation struct {
+  LandingPage LandingPage
+}
+
 func landPageListRet(ctx context.Context, args Args) ([]*LandingPage, error) {
     mc := MCQuestion{
         Question: "How are you",
@@ -26,30 +30,42 @@ func landPageListRet(ctx context.Context, args Args) ([]*LandingPage, error) {
         Question: "Why",
     }
 
+    t1 := "Hummingbird"
+    t2 := "Durgs"
+
+    st1 := "Sing like your favorite artists"
+    st2 := "Do some durgs"
+
+    jel1 := JoinEmailList{
+        JoinPrompt:     "Keep up to date",
+        JoinButtonText: "Join",
+    }
+    jel2 := JoinEmailList{
+        JoinPrompt:     "Find out about durgs",
+        JoinButtonText: "Segrada Familia",
+    }
+
+    q1 := Questions{
+        QuestionsPrompt: "Help us build something for you",
+        McQuestions:     []MCQuestion{mc},
+    }
+    q2 := Questions{
+        QuestionsPrompt:    "Help us build something for you",
+        OpenEndedQuestions: []OpenEndedQuestion{oe},
+    }
+
     return []*LandingPage{
         {
-            Title:    "HummingBird",
-            SubTitle: "Sing like your favorite artists",
-            JoinEmailList: JoinEmailList{
-                JoinPrompt:     "Keep up to date",
-                JoinButtonText: "Join",
-            },
-            Questions: Questions{
-                QuestionsPrompt: "Help us build something for you",
-                McQuestions:     []MCQuestion{mc},
-            },
+            Title:    &t1,
+            SubTitle: &st1,
+            JoinEmailList: &jel1,
+            Questions: &q1,
         },
         {
-            Title:    "Durgs",
-            SubTitle: "Do some durgs",
-            JoinEmailList: JoinEmailList{
-                JoinPrompt:     "Find out about durgs",
-                JoinButtonText: "Segrada Familia",
-            },
-            Questions: Questions{
-                QuestionsPrompt:    "Help us build something for you",
-                OpenEndedQuestions: []OpenEndedQuestion{oe},
-            },
+            Title:    &t2,
+            SubTitle: &st2,
+            JoinEmailList: &jel2,
+            Questions: &q2,
         },
     }, nil
 }
@@ -63,8 +79,8 @@ func (s *Server) registerQuery(schema *schemabuilder.Schema) {
 func (s *Server) registerMutation(schema *schemabuilder.Schema) {
     object := schema.Mutation()
 
-    object.FieldFunc("echo", func(ctx context.Context, args struct{ Text string }) (string, error) {
-            return args.Text, nil
+    object.FieldFunc("landingPage", func(ctx context.Context, args LandingPageMutation) (LandingPage, error) {
+            return args.LandingPage, nil
     })
 }
 
@@ -73,6 +89,8 @@ func (s *Server) Schema() *graphql.Schema {
 
     s.registerQuery(schema)
     s.registerMutation(schema)
+
+    // sssassaxcxdsasuv wefrddssu - Milly
 
     return schema.MustBuild()
 }
