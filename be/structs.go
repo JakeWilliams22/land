@@ -1,10 +1,10 @@
 package main
 
 type LandingPage struct {
-        Title         string
-        SubTitle      string
-        JoinEmailList JoinEmailList
-        Questions     Questions
+        Title         *string
+        SubTitle      *string
+        JoinEmailList *JoinEmailList
+        Questions     *Questions
 }
 
 type Questions struct {
