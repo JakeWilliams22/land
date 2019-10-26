@@ -7,6 +7,8 @@ import (
   "log"
   
   "github.com/graphql-go/graphql"
+  "github.com/gorilla/handlers"
+  "github.com/gorilla/mux"
 )
 
 func ping(w http.ResponseWriter, r *http.Request) {
@@ -55,10 +57,15 @@ func queryGraph(query string, schema graphql.Schema) *graphql.Result {
 }
 
 func main() {
-  http.HandleFunc("/", ping)
-  http.HandleFunc("/graphql", handleGraphql)
+  headersOk := handlers.AllowedHeaders([]string{"X-Requested-With", "Content-Type", "Authorization"})
+  originsOk := handlers.AllowedOrigins([]string{"*"})
+  methodsOk := handlers.AllowedMethods([]string{"GET", "POST"})
   
-  if err := http.ListenAndServe(":8080", nil); err != nil {
+  r := mux.NewRouter()
+  r.HandleFunc("/", ping)
+  r.HandleFunc("/graphql", handleGraphql)
+  
+  if err := http.ListenAndServe(":8080", handlers.CORS(originsOk, headersOk, methodsOk)(r)); err != nil {
     panic(err)
   }
 }
