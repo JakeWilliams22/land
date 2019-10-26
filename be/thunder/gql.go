@@ -90,16 +90,20 @@ func (s *Server) Schema() *graphql.Schema {
     s.registerQuery(schema)
     s.registerMutation(schema)
 
-    // sssassaxcxdsasuv wefrddssu - Milly
+    // sssassaxcxdsasuv wefrddssu - Milly the dog
 
     return schema.MustBuild()
+}
+
+func enableCors(w *http.ResponseWriter) {
+	(*w).Header().Set("Access-Control-Allow-Origin", "*")
 }
 
 func main() {
     server := &Server{}
     graphqlSchema := server.Schema()
     introspection.AddIntrospectionToSchema(graphqlSchema)
-
+   
     http.Handle("/graphql", graphql.Handler(graphqlSchema))
     http.Handle("/graphiql/", http.StripPrefix("/graphiql/", graphiql.Handler()))
 
