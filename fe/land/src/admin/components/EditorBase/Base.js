@@ -6,7 +6,7 @@ import {Checkbox} from "@material-ui/core";
 class EditorInput extends React.Component {
     render = () =>
         (
-            <div class="EditorInput">
+            <div className="EditorInput">
                 <InputLabel>{this.props.title}</InputLabel>
                 <Input />
             </div>
@@ -21,11 +21,11 @@ class EditorSection extends React.Component {
 
     render = () =>
         (
-            <div class={"EditorSection"}>
+            <div className={"EditorSection"}>
                 <Checkbox
                     checked={this.state.show}
                     onChange={() => this.setState({"show":!this.state.show})}/> {this.props.title}
-                <div class={"EditorSectionContent"}>
+                <div className={"EditorSectionContent"}>
                     {this.state.show ? this.props.children : ""}
                 </div>
             </div>
