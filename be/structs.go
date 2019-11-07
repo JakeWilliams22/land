@@ -5,6 +5,7 @@ type LandingPage struct {
         SubTitle      *string
         JoinEmailList *JoinEmailList
         Questions     *Questions
+        Id            *string
 }
 
 type Questions struct {
