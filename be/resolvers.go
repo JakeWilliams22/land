@@ -8,6 +8,10 @@ import (
     "github.com/graphql-go/graphql"
 )
 
+func getLandingPageById(p graphql.ResolveParams) (interface{}, error) {
+  return landingPages()[0], nil;
+}
+
 func landingPages() []LandingPage {
     mc := MCQuestion{
         Question: "How are you",
@@ -61,12 +65,21 @@ func landingPages() []LandingPage {
 func createSchema() graphql.Schema {
   // Schema
     fields := graphql.Fields{
-        "landingPages": &graphql.Field{
-            Type: graphql.NewList(landingPageGQL),
-            Resolve: func(p graphql.ResolveParams) (interface{}, error) {
-                return landingPages(), nil
-            },
+      "landingPages": &graphql.Field{
+          Type: graphql.NewList(landingPageGQL),
+          Resolve: func(p graphql.ResolveParams) (interface{}, error) {
+              return landingPages(), nil
+          },
+      },
+      "landingPageById": &graphql.Field {
+        Type: landingPageGQL,
+        Args: graphql.FieldConfigArgument{
+          "id": &graphql.ArgumentConfig{
+            Type: graphql.String,
+          },
         },
+        Resolve: getLandingPageById,
+      },
     }
     rootQuery := graphql.ObjectConfig{Name: "RootQuery", Fields: fields}
     schemaConfig := graphql.SchemaConfig{Query: graphql.NewObject(rootQuery)}
@@ -90,6 +103,9 @@ func main2() {
                     question
                   }
                 }
+            },
+            landingPageById(id: "0") {
+              title
             }
         }
     `
