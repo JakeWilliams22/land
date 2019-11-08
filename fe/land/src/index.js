@@ -10,7 +10,7 @@ const gqlClient = new GqlClient();
 
 let app = (
     <gqlContext.Provider value={gqlClient}>
-        <App />
+        <App gqlClient={gqlClient}/>
     </gqlContext.Provider>
 );
 

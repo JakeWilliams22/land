@@ -29,3 +29,7 @@ type JoinEmailList struct {
         JoinPrompt     string
         JoinButtonText string
 }
+
+type GqlRequest struct {
+        GqlQuery string
+}
