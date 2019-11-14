@@ -1,7 +1,8 @@
 import React from 'react';
 import './App.css';
 import AdminApp from './admin/AdminApp.js'
-import LandingPage from "./components/LandingPage/LandingPage";
+import LandingPage, {LandingPageData} from "./components/LandingPage/LandingPage";
+import {landingPageByIdQuery} from "./workers/gqlQueries";
 
 const rootURL = "localhost:3000";
 
@@ -9,7 +10,7 @@ class App extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            "landingPageJson": "",
+            "landingPageData": new LandingPageData(),
         };
     }
 
@@ -22,17 +23,11 @@ class App extends React.Component {
         const pageId = routeInfo[0];
         const subPage = routeInfo[1];
         console.log(pageId);
-        const queryText = `
-            {
-              landingPageById(id: "` + pageId  + `") {
-                title
-                //TODO(CUR)
-              }
-            }`;
+        const queryText = landingPageByIdQuery(pageId);
         this.props.gqlClient.query({gqlQuery: queryText})
             .then(response => response.json())
             .then(text =>
-                this.setState({"landingPageJson": text}));
+                this.setState({"landingPageData": LandingPageData.fromJson(text)}));
     };
 
     routeInfoFromURL = () => {
@@ -44,7 +39,7 @@ class App extends React.Component {
     render = () => (
         <div className="App">
             {/*<AdminApp />*/}
-            <LandingPage landingPageJson={this.state.landingPageJson} />
+            <LandingPage landingPageData={this.state.landingPageData} />
         </div>
     );
 }

@@ -22,15 +22,18 @@ func landingPages() []LandingPage {
         Question: "Why",
     }
 
-    t1 := "Hummingbird"
+    t1 := "Hummingnerd"
     t2 := "Durgs"
 
-    st1 := "Sing like your favorite artists"
+    st1 := "Sing like your favorite fartists"
     st2 := "Do some durgs"
 
+    bt1 := "You found us while Hummingnerd is still in the Lab! We'll let you know as soon as it's ready!"
+    bt2 := "2You found us while Hummingbird is still in the Lab! We'll let you know as soon as it's ready!"
+
     jel1 := JoinEmailList{
-        JoinPrompt:     "Keep up to date",
-        JoinButtonText: "Join",
+        JoinPrompt:     "Keep up to d8",
+        JoinButtonText: "Joins",
     }
     jel2 := JoinEmailList{
         JoinPrompt:     "Find out about durgs",
@@ -38,7 +41,7 @@ func landingPages() []LandingPage {
     }
 
     q1 := Questions{
-        QuestionsPrompt: "Help us build something for you",
+        QuestionsPrompt: "Help us build something for poo",
         McQuestions:     []MCQuestion{mc},
     }
     q2 := Questions{
@@ -50,12 +53,14 @@ func landingPages() []LandingPage {
         {
             Title:    &t1,
             SubTitle: &st1,
+            BodyText: &bt1,
             JoinEmailList: &jel1,
             Questions: &q1,
         },
         {
             Title:    &t2,
             SubTitle: &st2,
+            BodyText: &bt2,
             JoinEmailList: &jel2,
             Questions: &q2,
         },
@@ -65,13 +70,13 @@ func landingPages() []LandingPage {
 func createSchema() graphql.Schema {
   // Schema
     fields := graphql.Fields{
-      "landingPages": &graphql.Field{
+      "allLandingPages": &graphql.Field{
           Type: graphql.NewList(landingPageGQL),
           Resolve: func(p graphql.ResolveParams) (interface{}, error) {
               return landingPages(), nil
           },
       },
-      "landingPageById": &graphql.Field {
+      "landingPage": &graphql.Field {
         Type: landingPageGQL,
         Args: graphql.FieldConfigArgument{
           "id": &graphql.ArgumentConfig{

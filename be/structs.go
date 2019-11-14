@@ -3,6 +3,7 @@ package main
 type LandingPage struct {
         Title         *string
         SubTitle      *string
+        BodyText      *string
         JoinEmailList *JoinEmailList
         Questions     *Questions
         Id            *string

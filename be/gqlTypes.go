@@ -14,6 +14,9 @@ var landingPageGQL = graphql.NewObject(
             "subTitle": &graphql.Field{
                 Type: graphql.String,
             },
+            "bodyText": &graphql.Field{
+                Type: graphql.String,
+            },
             "joinEmailList": &graphql.Field{
                 Type: joinEmailListGQL,
             },

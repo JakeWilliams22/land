@@ -6,24 +6,20 @@ import QuestionCard from '../../components/Questions/QuestionCard';
 class LandingPage extends React.Component {
     constructor(props) {
         super(props);
-        const landingPageData = LandingPageData.fromJson(this.props.landingPageJson);
-        this.state = {
-            "pageData": landingPageData,
-        };
     }
 
     render = () => (
         <div className="LandingPage">
             <header className="LandingPage-header">
                 <img src={logo} alt="logo" width="200px"/>
-                <h1>{this.state.pageData.title}</h1>
-                <h3>{this.state.pageData.subTitle}</h3>
+                <h1>{this.props.landingPageData.title}</h1>
+                <h3>{this.props.landingPageData.subTitle}</h3>
             </header>
             <div className="App-content">
-                <p>{this.state.pageData.bodyText}</p>
-                {this.state.pageData.joinEmailList}
+                <p>{this.props.landingPageData.bodyText}</p>
+                {this.props.landingPageData.joinEmailList}
                 <p>Help us build something better</p>
-                {this.state.pageData.questionCard}
+                {this.props.landingPageData.questionCard}
             </div>
         </div>
     );
@@ -40,8 +36,28 @@ class LandingPageData {
     }
 
     static fromJson = (rawJson) => {
-        //TODO(CUR)
-        return new LandingPageData();
+        var landingPageData = new LandingPageData();
+        console.log(rawJson);
+        var landingPageJson = rawJson.data.landingPage;
+        landingPageData.title = landingPageJson.title;
+        landingPageData.subTitle = landingPageJson.subTitle;
+        landingPageData.bodyText = landingPageJson.bodyText;
+        landingPageData.joinEmailList = LandingPageData.createJoinEmailListElem(
+            landingPageJson.joinEmailList.joinPrompt,
+            landingPageJson.joinEmailList.joinButtonText);
+        landingPageData.questionCard = LandingPageData.createQuestionCardElem(
+
+        );
+        console.log(landingPageData);
+        return landingPageData;
+    };
+
+    static createJoinEmailListElem = (joinPrompt, joinButtonText) => {
+        return (<JoinEmailList joinPrompt={joinPrompt} joinText={joinButtonText}/>)
+    };
+
+    static createQuestionCardElem = (questionJson) => {
+        return (<QuestionCard json={questionJson} />);
     }
 }
 

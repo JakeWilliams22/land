@@ -37,18 +37,21 @@ class JoinEmailList extends React.Component {
 
     render = () =>
         (
-            <div className="JoinEmailList">
-                <form autoComplete="on" onSubmit={this.submit}>
-                    <Input
-                        name={"email"}
-                        value={this.state.email}
-                        onChange={this.handleChange}
-                        error={!this.state.valid}
-                        placeholder={this.props.placeHolder || "Enter Your Email"}
-                        autoComplete={"JEL email"}
-                        type="email"/>
-                    <Button type="submit">{this.props.joinText || "Join"}</Button>
-                </form>
+            <div>
+                <p>{this.props.joinPrompt}</p>
+                <div className="JoinEmailList">
+                    <form autoComplete="on" onSubmit={this.submit}>
+                        <Input
+                            name={"email"}
+                            value={this.state.email}
+                            onChange={this.handleChange}
+                            error={!this.state.valid}
+                            placeholder={this.props.placeHolder || "Enter Your Email"}
+                            autoComplete={"JEL email"}
+                            type="email"/>
+                        <Button type="submit">{this.props.joinText || "Join"}</Button>
+                    </form>
+                </div>
             </div>
         )
 }

@@ -1,6 +1,5 @@
 class GqlClient {
     GQL_URL = "http://localhost:8080/graphql";
-
     query = (query) => {
         return fetch(this.GQL_URL,
             {
