@@ -3,6 +3,7 @@ package main
 type LandingPage struct {
         Title         *string
         SubTitle      *string
+        BodyText      *string
         JoinEmailList *JoinEmailList
         Questions     *Questions
         Id            *string
@@ -28,4 +29,8 @@ type OpenEndedQuestion struct {
 type JoinEmailList struct {
         JoinPrompt     string
         JoinButtonText string
+}
+
+type GqlRequest struct {
+        GqlQuery string
 }
