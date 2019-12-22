@@ -6,8 +6,28 @@ import (
     _ "github.com/go-sql-driver/mysql"
 )
 
-// Logic for parsing query results into object data structures should live here.
-// AKA do not create structs for db rows/query results.
+func query(db *sql.DB, query string) *sql.Rows {
+    result, err := db.Query(query)
+    if err != nil {
+        panic(err)
+    }
+    return result
+}
+
+func initDb() *sql.DB {
+    // Open up our database connection.
+    //TODO: Password environment variable
+    db, err := sql.Open("mysql", "user:password!@tcp(land.cyoywlf7jxiv.us-east-2.rds.amazonaws.com:3306)/Land")
+    
+    if err != nil {
+        panic(err.Error())
+    }
+    
+    return db
+}
+
+// Logic for parsing query results into object data structures should be here.
+// Do not create structs for db rows/query results.
 func parseLandingPageResult(result *sql.Rows) []LandingPage {
     landingPages := make([]LandingPage, 0)
     for result.Next() {
@@ -22,30 +42,28 @@ func parseLandingPageResult(result *sql.Rows) []LandingPage {
     return landingPages
 }
 
+func parseJoinEmailListResult(result *sql.Rows) []JoinEmailList {
+  joinEmailLists := make([]JoinEmailList, 0)
+  for result.Next() {
+    var jel JoinEmailList
+    if err := result.Scan(&jel.JoinPrompt, &jel.JoinButtonText); err != nil {
+      panic(err.Error())
+    }
+    joinEmailLists = append(joinEmailLists, jel)
+  }
+  return joinEmailLists
+}
+
+// func parseQuestionResult(result *sql.Rows) Questions {
+  // TODO
+  // return nil
+// }
 
 func testDb() {
-// func main() {
-    fmt.Println("Go MySQL Tutorial")
-
-    // Open up our database connection.
-    //TODO: Password environment variable
-    db, err := sql.Open("mysql", "jisawesome:password!@tcp(land.cyoywlf7jxiv.us-east-2.rds.amazonaws.com:3306)/Land")
-
-    // if there is an error opening the connection, handle it
-    if err != nil {
-        panic(err.Error())
-    }
-
-    // defer the close till after the main function has finished
-    // executing
+    db := initDb()
     defer db.Close()
     
-    result, err := db.Query(
-      "SELECT ID, TITLE, SUB_TITLE, BODY_TEXT FROM LANDING_PAGES")
-    
-    if err != nil {
-        panic(err.Error()) // proper error handling instead of panic in your app
-    }
+    result := query(db, "SELECT ID, TITLE, SUB_TITLE, BODY_TEXT FROM LANDING_PAGES")
     
     landingPages := parseLandingPageResult(result)
     

@@ -9,7 +9,11 @@ import (
 )
 
 func getLandingPageById(p graphql.ResolveParams) (interface{}, error) {
-  return landingPages()[0], nil;
+  id := p.Args["id"]
+  if id, ok := id.(string); ok {
+    return getLandingPage(id), nil
+  }
+  panic("Invalid type for ID field in query")
 }
 
 func landingPages() []LandingPage {
@@ -95,22 +99,28 @@ func createSchema() graphql.Schema {
     return schema
 }
 
-func main2() {
+func testAPI() {
     schema := createSchema()
 
     // Query
+    // landingPages {
+                // title,
+                // questions {
+                  // mcQuestions {
+                    // question
+                  // }
+                // }
+            // },
     query := `
         {
-            landingPages {
-                title,
-                questions {
-                  mcQuestions {
-                    question
-                  }
-                }
-            },
-            landingPageById(id: "0") {
+            landingPage(id: "-1") {
               title
+              subTitle
+              bodyText
+              joinEmailList {
+                joinPrompt
+                joinButtonText
+              }
             }
         }
     `
@@ -123,5 +133,5 @@ func main2() {
         log.Fatalf("failed to execute graphql operation, errors: %+v", r.Errors)
     }
     rJSON, _ := json.Marshal(r)
-    fmt.Printf("%s \n", rJSON) // {“data”:{“hello”:”world”}}
+    fmt.Printf("\n%s \n", rJSON) // {“data”:{“hello”:”world”}}
 }

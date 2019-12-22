@@ -1,0 +1,7 @@
+CREATE TABLE OPEN_ENDED_QUESTIONS (
+	ID INTEGER NOT NULL PRIMARY KEY,
+	LANDING_PAGE_ID varchar(100),
+    Question varchar(1000)
+);
+
+INSERT INTO OPEN_ENDED_QUESTIONS VALUES (-1, -1, "Tell us about how you feel");

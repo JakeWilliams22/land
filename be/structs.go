@@ -11,8 +11,7 @@ type LandingPage struct {
 
 type Questions struct {
         QuestionsPrompt string
-        //TODO Figure out how to make this an interface. Thunder seems to not support it.
-        //TODO Figure out question ordering if ^^ can't work
+        //TODO Figure out how to make this an interface.
         McQuestions        []MCQuestion
         OpenEndedQuestions []OpenEndedQuestion
 }
