@@ -1,17 +1,18 @@
 package main
 
 import (
-    "database/sql"
+	"database/sql"
 )
 
 var db *sql.DB
+
 func init() {
-  db = initDb()
+	db = initDb()
 }
 
 func main() {
-  defer db.Close()
-  // testDb()
-  testAPI()
-  // startServer()
+	defer db.Close()
+	// testDb()
+	testAPI()
+	// startServer()
 }
