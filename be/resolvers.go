@@ -14,6 +14,7 @@ func getLandingPageById(p graphql.ResolveParams) (interface{}, error) {
     return getLandingPage(id), nil
   }
   panic("Invalid type for ID field in query")
+  // return landingPages()[1], nil
 }
 
 func landingPages() []LandingPage {
@@ -22,9 +23,13 @@ func landingPages() []LandingPage {
         Answers:  []string{"good"},
     }
 
+    q1List := []Question{mc}
+
     oe := OpenEndedQuestion{
         Question: "Why",
     }
+
+    q2List := []Question{oe}
 
     t1 := "Hummingnerd"
     t2 := "Durgs"
@@ -44,58 +49,36 @@ func landingPages() []LandingPage {
         JoinButtonText: "Segrada Familia",
     }
 
-    q1 := Questions{
-        QuestionsPrompt: "Help us build something for poo",
-        McQuestions:     []MCQuestion{mc},
-    }
-    q2 := Questions{
-        QuestionsPrompt:    "Help us build something for you",
-        OpenEndedQuestions: []OpenEndedQuestion{oe},
-    }
-
     return []LandingPage{
         {
             Title:    &t1,
             SubTitle: &st1,
             BodyText: &bt1,
             JoinEmailList: &jel1,
-            Questions: &q1,
+            Questions: q1List,
         },
         {
             Title:    &t2,
             SubTitle: &st2,
             BodyText: &bt2,
             JoinEmailList: &jel2,
-            Questions: &q2,
+            Questions: q2List,
         },
     }
 }
 
 func createSchema() graphql.Schema {
-  // Schema
-    fields := graphql.Fields{
-      "allLandingPages": &graphql.Field{
-          Type: graphql.NewList(landingPageGQL),
-          Resolve: func(p graphql.ResolveParams) (interface{}, error) {
-              return landingPages(), nil
-          },
-      },
-      "landingPage": &graphql.Field {
-        Type: landingPageGQL,
-        Args: graphql.FieldConfigArgument{
-          "id": &graphql.ArgumentConfig{
-            Type: graphql.String,
-          },
-        },
-        Resolve: getLandingPageById,
-      },
-    }
-    rootQuery := graphql.ObjectConfig{Name: "RootQuery", Fields: fields}
+    rootQuery := getRootGQLQuery()
     schemaConfig := graphql.SchemaConfig{Query: graphql.NewObject(rootQuery)}
     schema, err := graphql.NewSchema(schemaConfig)
     if err != nil {
         log.Fatalf("failed to create new schema, error: %v", err)
     }
+    fmt.Print(oeQuestionGraphQL)
+    schema.AppendType(oeQuestionGraphQL)
+    schema.AppendType(mcQuestionGraphQL)
+    fmt.Printf("\n%s\n", schema.PossibleTypes(questionsInterfaceGQL))
+    fmt.Printf("\n%s\n", schema.TypeMap())
     return schema
 }
 
@@ -103,20 +86,19 @@ func testAPI() {
     schema := createSchema()
 
     // Query
-    // landingPages {
-                // title,
-                // questions {
-                  // mcQuestions {
-                    // question
-                  // }
-                // }
-            // },
     query := `
         {
             landingPage(id: "-1") {
               title
               subTitle
               bodyText
+              questions {
+                questionPrompt
+                questionType
+                ... on MCQuestion {
+                  answers
+                }
+              }
               joinEmailList {
                 joinPrompt
                 joinButtonText

@@ -5,19 +5,19 @@ type LandingPage struct {
         SubTitle      *string
         BodyText      *string
         JoinEmailList *JoinEmailList
-        Questions     *Questions
+        Questions      []Question
         Id            *string
 }
 
-type Questions struct {
-        QuestionsPrompt string
-        //TODO Figure out how to make this an interface.
-        McQuestions        []MCQuestion
-        OpenEndedQuestions []OpenEndedQuestion
-}
+type QuestionType int32
+const (
+        MULTIPLE_CHOICE QuestionType = iota
+        OPEN_ENDED
+)
 
-func (q *Questions) isEmpty() bool {
-  return len(q.McQuestions) + len(q.OpenEndedQuestions) == 0
+type Question interface {
+        QuestionText() string
+        QuestionType() QuestionType
 }
 
 type MCQuestion struct {
@@ -25,8 +25,24 @@ type MCQuestion struct {
         Answers  []string
 }
 
+func (mcq MCQuestion) QuestionText() string {
+  return mcq.Question
+}
+
+func (mcq MCQuestion) QuestionType() QuestionType {
+  return MULTIPLE_CHOICE
+}
+
 type OpenEndedQuestion struct {
         Question string
+}
+
+func (oeq OpenEndedQuestion) QuestionText() string {
+  return oeq.Question
+}
+
+func (oeq OpenEndedQuestion) QuestionType() QuestionType{
+  return OPEN_ENDED
 }
 
 type JoinEmailList struct {

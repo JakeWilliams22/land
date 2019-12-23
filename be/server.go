@@ -19,12 +19,7 @@ func ping(w http.ResponseWriter, r *http.Request) {
 var graphqlPingQuery = `
         {
             landingPages {
-                title,
-                questions {
-                  mcQuestions {
-                    question
-                  }
-                }
+                title
             }
         }
     `
