@@ -45,9 +45,8 @@ class LandingPageData {
         landingPageData.joinEmailList = LandingPageData.createJoinEmailListElem(
             landingPageJson.joinEmailList.joinPrompt,
             landingPageJson.joinEmailList.joinButtonText);
-        landingPageData.questionCard = LandingPageData.createQuestionCardElem(
-
-        );
+        //TODO Make this not be created if question list is empty
+        landingPageData.questionCard = LandingPageData.createQuestionCardElem();
         console.log(landingPageData);
         return landingPageData;
     };

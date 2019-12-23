@@ -6,9 +6,7 @@ let landingPageByIdQuery = (pageId) => {
             subTitle
             bodyText
             questions {
-              mcQuestions {
-                question
-              }
+                questionPrompt
             }
             joinEmailList {
                 joinPrompt
