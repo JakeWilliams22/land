@@ -16,6 +16,10 @@ type Questions struct {
         OpenEndedQuestions []OpenEndedQuestion
 }
 
+func (q *Questions) isEmpty() bool {
+  return len(q.McQuestions) + len(q.OpenEndedQuestions) == 0
+}
+
 type MCQuestion struct {
         Question string
         Answers  []string

@@ -6,9 +6,12 @@ import (
 
 func getLandingPage(id string) LandingPage {
   landingPage := getLandingPageBase(id)
-  joinEmailList := getJoinEmailList(id)
-  
-  landingPage.JoinEmailList = &joinEmailList
+  if joinEmailList, exist := getJoinEmailList(id); exist {
+   landingPage.JoinEmailList = &joinEmailList 
+  }
+  if questions := getQuestionsForLandingPage(id); !questions.isEmpty() {
+    landingPage.Questions = &questions
+  }
   fmt.Printf("%+v",landingPage)
   return landingPage
 }
@@ -20,14 +23,12 @@ func getLandingPageBase(id string) LandingPage {
   return landingPage
 }
 
-func getJoinEmailList(landingPageId string) JoinEmailList {
-  var joinEmailList JoinEmailList
+func getJoinEmailList(landingPageId string) (JoinEmailList, bool){
   result := query(db, "SELECT PROMPT, BUTTON_TEXT FROM JOIN_EMAIL_LIST WHERE LANDING_PAGE_ID = " + landingPageId)
-  joinEmailList = parseJoinEmailListResult(result)[0]
-  return joinEmailList
+  joinEmailListResults := parseJoinEmailListResult(result)
+  return joinEmailListResults[0], len(joinEmailListResults) != 0
 }
 
-// func getQuestionsForLandingPage(landingPageId string) []Question {
-  // TODO
-  
-// }
+func getQuestionsForLandingPage(landingPageId string) Questions {
+  return Questions{}  
+}

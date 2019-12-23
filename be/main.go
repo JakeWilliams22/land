@@ -13,5 +13,5 @@ func main() {
   defer db.Close()
   // testDb()
   // testAPI()
-  // startServer()
+  startServer()
 }
