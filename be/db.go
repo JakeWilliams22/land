@@ -17,7 +17,7 @@ func query(db *sql.DB, query string) *sql.Rows {
 func initDb() *sql.DB {
 	// Open up our database connection.
 	//TODO: Password environment variable
-	db, err := sql.Open("mysql", "user:oass!@tcp(land.cyoywlf7jxiv.us-east-2.rds.amazonaws.com:3306)/Land")
+	db, err := sql.Open("mysql", "user:pass!@tcp(land.cyoywlf7jxiv.us-east-2.rds.amazonaws.com:3306)/Land")
 
 	if err != nil {
 		panic(err.Error())
@@ -52,6 +52,33 @@ func parseJoinEmailListResult(result *sql.Rows) []JoinEmailList {
 		joinEmailLists = append(joinEmailLists, jel)
 	}
 	return joinEmailLists
+}
+
+func parseMCQuestionResult(result *sql.Rows) ([]int, []MCQuestion) {
+  MCQuestions := make([]MCQuestion, 0)
+  questionIds := make([]int, 0)
+  for result.Next() {
+		var mcq MCQuestion
+    var questionId int
+		if err := result.Scan(&questionId, &mcq.Question); err != nil {
+			panic(err.Error())
+		}
+		MCQuestions = append(MCQuestions, mcq)
+    questionIds = append(questionIds, questionId)
+	}
+  return questionIds, MCQuestions
+}
+
+func parseMCAnswersResult(result *sql.Rows) []string {
+  answers := make([]string, 0)
+  for result.Next() {
+		var answer string
+		if err := result.Scan(&answer); err != nil {
+			panic(err.Error())
+		}
+		answers = append(answers, answer)
+	}
+  return answers
 }
 
 func testDb() {

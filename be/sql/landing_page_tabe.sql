@@ -1,4 +1,4 @@
-USE LAND;
+USE Land;
 CREATE TABLE LANDING_PAGES (
 	id varchar(100) not null primary key,
     title varchar(100),
