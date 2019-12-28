@@ -4,17 +4,39 @@ import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 
+let equal = require('deep-equal');
+
 // Props:   Question
-//          Answers
+//          options
 //          Next Action
 //          ID
+//          Json
 class MultipleChoice extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            "value": null,
+            "options": this.props.options,
+            "question": this.props.question,
+            "ID": this.props.ID,
         };
+        if (this.props.json) {
+            this.state = this.stateFromJson(this.props.json);
+        }
     }
+
+    componentDidUpdate(prevProps, prevState) {
+        if(!equal(this.props.json, prevProps.json)) {
+            this.setState(this.stateFromJson(this.props.json));
+        }
+    }
+
+    stateFromJson = (json) => {
+      return {
+          "options": json.answers,
+          "question": json.questionPrompt,
+          "ID": this.props.ID,
+      };
+    };
 
     handleChange = (e) => {
       this.setState({'value': e.target.value})
@@ -32,8 +54,12 @@ class MultipleChoice extends React.Component {
 
     getOptions = () => {
       let options = [];
-      this.props.options.forEach(answerText => options.push(
+      if (!this.state.options) {
+          return null
+      }
+      this.state.options.forEach((answerText, idx) => options.push(
           <FormControlLabel
+              key={idx}
               control={<Radio/>}
               label={answerText}
               value={answerText}
@@ -45,17 +71,21 @@ class MultipleChoice extends React.Component {
     render = () =>
         (
             <div className="MultipleChoiceQuestion">
-                <p className={"QuestionTitle"}>{this.props.question}</p>
-                <RadioGroup
-                    aria-label={this.props.question}
-                    name={"MC" + this.props.ID}
-                    value={this.state.value}
-                    onChange={this.handleChange}
-                >
-                    {this.getOptions()}
-                </RadioGroup>
+                {this.state.question !== undefined && this.state.options !== undefined ? (
+                        <div>
+                            <p className={"QuestionTitle"}>{this.state.question}</p>
+                            <RadioGroup
+                                aria-label={this.state.question}
+                                name={"MC" + this.state.ID}
+                                value={this.state.value}
+                                onChange={this.handleChange}
+                            >
+                                {this.getOptions()}
+                            </RadioGroup>
+                        </div>)
+                    : null}
             </div>
-        )
+        );
 }
 
 export default MultipleChoice;

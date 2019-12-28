@@ -22,7 +22,6 @@ class App extends React.Component {
         const routeInfo = this.routeInfoFromURL();
         const pageId = routeInfo[0];
         const subPage = routeInfo[1];
-        console.log(pageId);
         const queryText = landingPageByIdQuery(pageId);
         this.props.gqlClient.query({gqlQuery: queryText})
             .then(response => response.json())

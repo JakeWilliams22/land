@@ -11,9 +11,7 @@ class JoinEmailList extends React.Component {
 
     handleChange = (event) => {
         let email = event.target.value;
-        console.log(email)
         let isValid = this.validate(email);
-        console.log(isValid)
         this.setState({'email': email, 'valid':isValid});
     };
 
