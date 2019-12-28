@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"github.com/graphql-go/graphql"
 )
 
@@ -109,11 +108,7 @@ func getRootGQLQuery() graphql.ObjectConfig {
 
 	questionsInterfaceGQL.ResolveType =
 		func(p graphql.ResolveTypeParams) *graphql.Object {
-			fmt.Printf("\n%+v\n", p)
-			_, ok2 := p.Value.(Question)
-			fmt.Printf("\n%s\n", ok2)
 			if question, ok := p.Value.(Question); ok {
-				fmt.Printf("\n%+v\n", question)
 				if question.QuestionType() == 0 {
 					return mcQuestionGraphQL
 				} else if question.QuestionType() == 1 {

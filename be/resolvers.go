@@ -9,12 +9,12 @@ import (
 )
 
 func getLandingPageById(p graphql.ResolveParams) (interface{}, error) {
-	// id := p.Args["id"]
-	// if id, ok := id.(string); ok {
-	// return getLandingPage(id), nil
-	// }
-	// panic("Invalid type for ID field in query")
-	return landingPages()[1], nil
+	id := p.Args["id"]
+	if id, ok := id.(string); ok {
+		return getLandingPage(id), nil
+	}
+	panic("Invalid type for ID field in query")
+	// return landingPages()[1], nil
 }
 
 func landingPages() []LandingPage {
@@ -74,11 +74,8 @@ func createSchema() graphql.Schema {
 	if err != nil {
 		log.Fatalf("failed to create new schema, error: %v", err)
 	}
-	fmt.Print(oeQuestionGraphQL)
 	schema.AppendType(oeQuestionGraphQL)
 	schema.AppendType(mcQuestionGraphQL)
-	fmt.Printf("\n%s\n", schema.PossibleTypes(questionsInterfaceGQL))
-	fmt.Printf("\n%s\n", schema.TypeMap())
 	return schema
 }
 
