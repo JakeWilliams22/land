@@ -55,30 +55,45 @@ func parseJoinEmailListResult(result *sql.Rows) []JoinEmailList {
 }
 
 func parseMCQuestionResult(result *sql.Rows) ([]int, []MCQuestion) {
-  MCQuestions := make([]MCQuestion, 0)
-  questionIds := make([]int, 0)
-  for result.Next() {
+	MCQuestions := make([]MCQuestion, 0)
+	questionIds := make([]int, 0)
+	for result.Next() {
 		var mcq MCQuestion
-    var questionId int
+		var questionId int
 		if err := result.Scan(&questionId, &mcq.Question); err != nil {
 			panic(err.Error())
 		}
 		MCQuestions = append(MCQuestions, mcq)
-    questionIds = append(questionIds, questionId)
+		questionIds = append(questionIds, questionId)
 	}
-  return questionIds, MCQuestions
+	return questionIds, MCQuestions
 }
 
 func parseMCAnswersResult(result *sql.Rows) []string {
-  answers := make([]string, 0)
-  for result.Next() {
+	answers := make([]string, 0)
+	for result.Next() {
 		var answer string
 		if err := result.Scan(&answer); err != nil {
 			panic(err.Error())
 		}
 		answers = append(answers, answer)
 	}
-  return answers
+	return answers
+}
+
+func parseOEQuestionResult(result *sql.Rows) ([]int, []OpenEndedQuestion) {
+	OEQuestions := make([]OpenEndedQuestion, 0)
+	questionIds := make([]int, 0)
+	for result.Next() {
+		var oeq OpenEndedQuestion
+		var questionId int
+		if err := result.Scan(&questionId, &oeq.Question); err != nil {
+			panic(err.Error())
+		}
+		OEQuestions = append(OEQuestions, oeq)
+		questionIds = append(questionIds, questionId)
+	}
+	return questionIds, OEQuestions
 }
 
 func testDb() {

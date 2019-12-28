@@ -11,7 +11,7 @@ import (
 func getLandingPageById(p graphql.ResolveParams) (interface{}, error) {
 	id := p.Args["id"]
 	if id, ok := id.(string); ok {
-    return getLandingPage(id), nil
+		return getLandingPage(id), nil
 	}
 	panic("Invalid type for ID field in query")
 	// return landingPages()[1], nil
