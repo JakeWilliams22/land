@@ -37,7 +37,6 @@ class LandingPageData {
 
     static fromJson = (rawJson) => {
         var landingPageData = new LandingPageData();
-        console.log(rawJson);
         var landingPageJson = rawJson.data.landingPage;
         landingPageData.title = landingPageJson.title;
         landingPageData.subTitle = landingPageJson.subTitle;
@@ -45,8 +44,8 @@ class LandingPageData {
         landingPageData.joinEmailList = LandingPageData.createJoinEmailListElem(
             landingPageJson.joinEmailList.joinPrompt,
             landingPageJson.joinEmailList.joinButtonText);
-        //TODO Make this not be created if question list is empty
-        landingPageData.questionCard = LandingPageData.createQuestionCardElem();
+        landingPageData.questionCard =
+            LandingPageData.createQuestionCardElem(landingPageJson.questions);
         console.log(landingPageData);
         return landingPageData;
     };
@@ -56,7 +55,11 @@ class LandingPageData {
     };
 
     static createQuestionCardElem = (questionJson) => {
-        return (<QuestionCard json={questionJson} />);
+        var questions = Array.from(questionJson);
+        if (questions && questions.length) {
+            return (<QuestionCard json={questions} />);
+        }
+        return null;
     }
 }
 

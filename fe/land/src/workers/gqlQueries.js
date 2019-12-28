@@ -7,6 +7,10 @@ let landingPageByIdQuery = (pageId) => {
             bodyText
             questions {
                 questionPrompt
+                questionType
+                ... on MCQuestion {
+                    answers
+                }
             }
             joinEmailList {
                 joinPrompt

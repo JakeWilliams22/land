@@ -5,6 +5,8 @@ import CardContent from '@material-ui/core/CardContent';
 import MultipleChoice from './MultipleChoice';
 import OpenEnded from "./OpenEnded";
 
+let equal = require('deep-equal');
+
 class QuestionCard extends React.Component {
     constructor(props) {
         super(props);
@@ -14,13 +16,36 @@ class QuestionCard extends React.Component {
         };
     };
 
-    componentDidMount() {
-        this.getQuestions();
+    componentDidUpdate(prevProps, prevState) {
+        if(!equal(this.props.json, prevProps.json)) {
+            this.getQuestionsFromJson(this.props.json);
+        }
     }
 
+    getQuestionsFromJson = (questionList) => {
+        let questions = [];
+        if (!questionList) {
+            return;
+        }
+        questionList.forEach((questionJson, idx) => {
+            switch (parseInt(questionJson.questionType)) {
+                case 0:
+                    questions.push(<MultipleChoice
+                        json={questionJson} action={this.nextQuestion} ID={idx}/>);
+                    break;
+                case 1:
+                    questions.push(<OpenEnded
+                        json={questionJson} action={this.nextQuestion} ID={idx}/>);
+                    break;
+                default:
+                    console.log("Question not supported");
+                    break;
+            }
+        });
+        this.setState({'questions': questions});
+    };
+
     getQuestions = () => {
-        // TODO(W) Fetch questions from server
-        // TODO(W) Format them into ReactNodes
         let q0 = <OpenEnded
             action={this.nextQuestion}
             question={"What sucks for you"}/>
@@ -44,7 +69,7 @@ class QuestionCard extends React.Component {
     getCurrentQuestion = () => {
         if (this.state.question_idx >= this.state.questions.length) {
             return "Thanks!";
-            // TODO(F) Consider adding a fade out on the element here. Not worth displaying.
+            // TODO(F) Consider adding a fade out here.
         }
         return this.state.questions[this.state.question_idx];
     };
