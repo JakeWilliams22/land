@@ -15,7 +15,10 @@ class App extends React.Component {
     }
 
     componentDidMount() {
-        this.fetchData();
+        this.fetchData()
+            .then(() => {
+                this.state.landingPageData.pageview();
+            });
     }
 
     fetchData = () => {
@@ -23,7 +26,7 @@ class App extends React.Component {
         const pageId = routeInfo[0];
         const subPage = routeInfo[1];
         const queryText = landingPageByIdQuery(pageId);
-        this.props.gqlClient.query({gqlQuery: queryText})
+        return this.props.gqlClient.query({gqlQuery: queryText})
             .then(response => response.json())
             .then(text =>
                 this.setState({"landingPageData": LandingPageData.fromJson(text)}));

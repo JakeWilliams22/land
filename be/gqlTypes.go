@@ -122,6 +122,9 @@ func getRootGQLQuery() graphql.ObjectConfig {
 		graphql.ObjectConfig{
 			Name: "LandingPage",
 			Fields: graphql.Fields{
+				"id": &graphql.Field{
+					Type: graphql.String,
+				},
 				"title": &graphql.Field{
 					Type: graphql.String,
 				},
