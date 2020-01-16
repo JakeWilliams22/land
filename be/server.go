@@ -55,7 +55,8 @@ func queryGraph(query string, schema graphql.Schema) *graphql.Result {
 	params := graphql.Params{Schema: schema, RequestString: query}
 	r := graphql.Do(params)
 	if len(r.Errors) > 0 {
-		log.Fatalf("failed to execute graphql operation, errors: %+v", r.Errors)
+		log.Printf("failed to execute graphql operation, errors: %+v \n", r.Errors)
+		log.Printf("First error location and path: %+v, %+v \n", r.Errors[0].Locations, r.Errors[0].Path)
 	}
 	return r
 }

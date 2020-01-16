@@ -45,12 +45,15 @@ class LandingPageData {
         landingPageData.title = landingPageJson.title;
         landingPageData.subTitle = landingPageJson.subTitle;
         landingPageData.bodyText = landingPageJson.bodyText;
-        landingPageData.joinEmailList = LandingPageData.createJoinEmailListElem(
-            landingPageJson.joinEmailList.joinPrompt,
-            landingPageJson.joinEmailList.joinButtonText);
+        if (landingPageJson.joinEmailList) {
+            landingPageData.joinEmailList = LandingPageData.createJoinEmailListElem(
+                landingPageJson.joinEmailList.joinPrompt,
+                landingPageJson.joinEmailList.joinButtonText);
+        }
         landingPageData.questionCard =
             LandingPageData.createQuestionCardElem(landingPageJson.questions);
-        landingPageData.analytics = new Analytics('UA-156318179-1', landingPageData.id);
+        landingPageData.analytics =
+            new Analytics(landingPageJson.googleAnalyticsId, landingPageData.id);
         console.log(landingPageData);
         return landingPageData;
     };

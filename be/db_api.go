@@ -16,7 +16,7 @@ func getLandingPage(id string) LandingPage {
 }
 
 func getLandingPageBase(id string) LandingPage {
-	result := query(db, "SELECT ID, TITLE, SUB_TITLE, BODY_TEXT FROM LANDING_PAGES WHERE ID = "+id)
+	result := query(db, "SELECT ID, TITLE, SUB_TITLE, BODY_TEXT, GOOGLE_ANALYTICS_ID FROM LANDING_PAGES WHERE ID = "+id)
 	landingPage := parseLandingPageResult(result)[0]
 	return landingPage
 }
@@ -24,7 +24,11 @@ func getLandingPageBase(id string) LandingPage {
 func getJoinEmailList(landingPageId string) (JoinEmailList, bool) {
 	result := query(db, "SELECT PROMPT, BUTTON_TEXT FROM JOIN_EMAIL_LIST WHERE LANDING_PAGE_ID = "+landingPageId)
 	joinEmailListResults := parseJoinEmailListResult(result)
-	return joinEmailListResults[0], len(joinEmailListResults) != 0
+	if exist := len(joinEmailListResults) != 0; exist {
+		return joinEmailListResults[0], true
+	}
+	var joinEmailList JoinEmailList
+	return joinEmailList, false
 }
 
 func getQuestions(landingPageId string) []Question {

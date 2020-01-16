@@ -6,6 +6,7 @@ let landingPageByIdQuery = (pageId) => {
             title
             subTitle
             bodyText
+            googleAnalyticsId
             questions {
                 questionPrompt
                 questionType

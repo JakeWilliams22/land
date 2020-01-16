@@ -134,6 +134,9 @@ func getRootGQLQuery() graphql.ObjectConfig {
 				"bodyText": &graphql.Field{
 					Type: graphql.String,
 				},
+				"googleAnalyticsId": &graphql.Field{
+					Type: graphql.String,
+				},
 				"joinEmailList": &graphql.Field{
 					Type: joinEmailListGQL,
 				},

@@ -5,9 +5,9 @@ class Analytics {
     // Use landing page ID.
     constructor(id, name) {
         this.gaID = id;
-        this.gaName = "asdf";
+        this.gaName = name.replace("-","");
         ReactGA.initialize([{
-            trackingId: 'UA-156318179-1',
+            trackingId: this.gaID,
             gaOptions: {
                 name: this.gaName
             }
@@ -15,7 +15,9 @@ class Analytics {
     }
 
     pageView() {
-        ReactGA.pageview(this.gaName, [this.gaName]);
+        if (this.gaName !== undefined && this.gaID !== undefined) {
+            ReactGA.pageview(this.gaName, [this.gaName]);
+        }
     }
 }
 

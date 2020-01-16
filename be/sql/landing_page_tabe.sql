@@ -6,7 +6,14 @@ CREATE TABLE LANDING_PAGES (
     body_text varchar(10000)
 );
 
-INSERT INTO LANDING_PAGES VALUES (-1, "Moolah", "Get some money for your kids", "We like to do good. You like to do good. Let's all do good", -1);
+ALTER TABLE LANDING_PAGES ADD COLUMN GOOGLE_ANALYTICS_ID varchar(100);
+
+INSERT INTO LANDING_PAGES VALUES (
+	-2, 
+    "Greenlight Financial", 
+    "We give your kids the green light!", 
+    "Financial literacy is essential in today's fast** paced** world**", 
+    "UA-156318179-1");
 
 SELECT * FROM LANDING_PAGES;
 
