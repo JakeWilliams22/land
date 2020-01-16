@@ -12,3 +12,17 @@ An landing page customer discovery.
 - Google Analytics
 - Mailchimp
 - Surveymonkey
+
+## TODO
+MVP:
+- Handle Email Join
+- Handle question answering
+- Admin Panel
+  - Update landing page attributes
+  - Download Email List
+  - See question results
+  
+Bonus:
+- Integrate with Mailchimp
+- Integrate with SurveyMonkey
+- Add basic GA features (like page views)
