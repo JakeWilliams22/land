@@ -2,6 +2,7 @@ import React from 'react';
 import logo from '../../assets/logo.svg';
 import JoinEmailList from '../../components/JoinEmailList/JoinEmailList';
 import QuestionCard from '../../components/Questions/QuestionCard';
+import Analytics from '../../workers/analytics.js';
 
 class LandingPage extends React.Component {
     constructor(props) {
@@ -27,6 +28,7 @@ class LandingPage extends React.Component {
 
 class LandingPageData {
     constructor() {
+        this.id = "0";
         this.title = "Hummingbird";
         this.subTitle = "Sing like your favorite artists";
         this.bodyText = "You found us while Hummingbird is still in the Lab! " +
@@ -38,14 +40,20 @@ class LandingPageData {
     static fromJson = (rawJson) => {
         var landingPageData = new LandingPageData();
         var landingPageJson = rawJson.data.landingPage;
+        landingPageData.id = landingPageJson.id;
+        //TODO add GA ID
         landingPageData.title = landingPageJson.title;
         landingPageData.subTitle = landingPageJson.subTitle;
         landingPageData.bodyText = landingPageJson.bodyText;
-        landingPageData.joinEmailList = LandingPageData.createJoinEmailListElem(
-            landingPageJson.joinEmailList.joinPrompt,
-            landingPageJson.joinEmailList.joinButtonText);
+        if (landingPageJson.joinEmailList) {
+            landingPageData.joinEmailList = LandingPageData.createJoinEmailListElem(
+                landingPageJson.joinEmailList.joinPrompt,
+                landingPageJson.joinEmailList.joinButtonText);
+        }
         landingPageData.questionCard =
             LandingPageData.createQuestionCardElem(landingPageJson.questions);
+        landingPageData.analytics =
+            new Analytics(landingPageJson.googleAnalyticsId, landingPageData.id);
         console.log(landingPageData);
         return landingPageData;
     };
@@ -60,6 +68,12 @@ class LandingPageData {
             return (<QuestionCard json={questions} />);
         }
         return null;
+    };
+
+    pageview = () => {
+        if (this.analytics !== undefined) {
+            this.analytics.pageView();
+        }
     }
 }
 

@@ -33,7 +33,7 @@ func parseLandingPageResult(result *sql.Rows) []LandingPage {
 	for result.Next() {
 		var lp LandingPage
 
-		err := result.Scan(&lp.Id, &lp.Title, &lp.SubTitle, &lp.BodyText)
+		err := result.Scan(&lp.Id, &lp.Title, &lp.SubTitle, &lp.BodyText, &lp.GoogleAnalyticsId)
 		if err != nil {
 			panic(err.Error()) //TODO: Proper Error Handling
 		}

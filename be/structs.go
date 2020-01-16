@@ -1,12 +1,13 @@
 package main
 
 type LandingPage struct {
-	Title         *string
-	SubTitle      *string
-	BodyText      *string
-	JoinEmailList *JoinEmailList
-	Questions     []Question
-	Id            *string
+	Title             *string
+	SubTitle          *string
+	BodyText          *string
+	JoinEmailList     *JoinEmailList
+	Questions         []Question
+	Id                *string //TODO: Force this to be alphanumeric
+	GoogleAnalyticsId *string
 }
 
 type QuestionType int32

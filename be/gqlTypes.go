@@ -122,6 +122,9 @@ func getRootGQLQuery() graphql.ObjectConfig {
 		graphql.ObjectConfig{
 			Name: "LandingPage",
 			Fields: graphql.Fields{
+				"id": &graphql.Field{
+					Type: graphql.String,
+				},
 				"title": &graphql.Field{
 					Type: graphql.String,
 				},
@@ -129,6 +132,9 @@ func getRootGQLQuery() graphql.ObjectConfig {
 					Type: graphql.String,
 				},
 				"bodyText": &graphql.Field{
+					Type: graphql.String,
+				},
+				"googleAnalyticsId": &graphql.Field{
 					Type: graphql.String,
 				},
 				"joinEmailList": &graphql.Field{

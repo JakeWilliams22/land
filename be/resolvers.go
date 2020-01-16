@@ -85,22 +85,24 @@ func testAPI() {
 	// Query
 	query := `
         {
-            landingPage(id: "-1") {
-              title
-              subTitle
-              bodyText
-              questions {
+          landingPage(id: "-2") {
+            id
+            title
+            subTitle
+            bodyText
+            googleAnalyticsId
+            questions {
                 questionPrompt
                 questionType
                 ... on MCQuestion {
-                  answers
+                    answers
                 }
-              }
-              joinEmailList {
+            }
+            joinEmailList {
                 joinPrompt
                 joinButtonText
-              }
             }
+          }
         }
     `
 
