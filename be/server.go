@@ -62,7 +62,8 @@ func queryGraph(query string, schema graphql.Schema) *graphql.Result {
 }
 
 func startServer() {
-	headersOk := handlers.AllowedHeaders([]string{"X-Requested-With", "Content-Type", "Authorization"})
+	headersOk := handlers.AllowedHeaders(
+		[]string{"X-Requested-With", "Content-Type", "Authorization"})
 	originsOk := handlers.AllowedOrigins([]string{"*"})
 	methodsOk := handlers.AllowedMethods([]string{"GET", "POST"})
 

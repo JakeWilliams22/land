@@ -17,7 +17,7 @@ func query(db *sql.DB, query string) *sql.Rows {
 func initDb() *sql.DB {
 	// Open up our database connection.
 	//TODO: Password environment variable
-	db, err := sql.Open("mysql", "user:pass!@tcp(land.cyoywlf7jxiv.us-east-2.rds.amazonaws.com:3306)/Land")
+	db, err := sql.Open("mysql", "jisawesome:ThousandHills1!@tcp(land.cyoywlf7jxiv.us-east-2.rds.amazonaws.com:3306)/Land")
 
 	if err != nil {
 		panic(err.Error())
