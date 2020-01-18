@@ -17,6 +17,13 @@ func getLandingPageById(p graphql.ResolveParams) (interface{}, error) {
 	// return landingPages()[1], nil
 }
 
+func resolveAddEmailSubscriber(params graphql.ResolveParams) (interface{}, error) {
+	email := params.Args["email"].(string)
+	landingPageId := params.Args["landingPageId"].(string)
+	success := addEmailSubscriber(email, landingPageId)
+	return success, nil
+}
+
 func landingPages() []LandingPage {
 	mc := MCQuestion{
 		Question: "How are you",
@@ -70,9 +77,11 @@ func landingPages() []LandingPage {
 }
 
 func createSchema() graphql.Schema {
-	rootQuery := getRootGQLQuery()
+	rootQuery, rootMutation := getGQLConfigs()
 	schemaConfig :=
-		graphql.SchemaConfig{Query: graphql.NewObject(rootQuery)}
+		graphql.SchemaConfig{
+			Query:    graphql.NewObject(rootQuery),
+			Mutation: graphql.NewObject(rootMutation)}
 	schema, err := graphql.NewSchema(schemaConfig)
 	if err != nil {
 		log.Fatalf("failed to create new schema, error: %v", err)
@@ -109,9 +118,15 @@ func testAPI() {
         }
     `
 
-	// sssassaxcxdsasuv wefrddssu - Milly the dog
+	mutation := `
+		mutation {
+		  addEmailSubscriber(email: "test email", landingPageId: "-1")
+		}
+	`
 
-	params := graphql.Params{Schema: schema, RequestString: query}
+	// sssassaxcxdsasuv wefrddssu - Milly the dog
+	fmt.Print(query != "")
+	params := graphql.Params{Schema: schema, RequestString: mutation}
 	r := graphql.Do(params)
 	if len(r.Errors) > 0 {
 		log.Fatalf(

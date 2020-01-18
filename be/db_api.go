@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"strconv"
 )
 
@@ -66,4 +67,12 @@ func getOEQuestions(landingPageId string) []OpenEndedQuestion {
 	questionResult := query(db, "SELECT ID, QUESTION FROM OPEN_ENDED_QUESTIONS WHERE LANDING_PAGE_ID = "+landingPageId)
 	_, questions := parseOEQuestionResult(questionResult)
 	return questions
+}
+
+func addEmailSubscriber(email string, landingPageId string) bool {
+	sql := fmt.Sprintf(
+		"INSERT INTO EMAILS VALUES ('%s', '%s', NOW())",
+		email,
+		landingPageId)
+	return insertQuery(db, sql)
 }
