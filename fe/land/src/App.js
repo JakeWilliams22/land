@@ -3,6 +3,7 @@ import './App.css';
 import AdminApp from './admin/AdminApp.js'
 import LandingPage, {LandingPageData} from "./components/LandingPage/LandingPage";
 import {landingPageByIdQuery} from "./workers/gqlQueries";
+import GqlClient from "./workers/gqlClient";
 
 const rootURL = "localhost:3000";
 
@@ -26,7 +27,7 @@ class App extends React.Component {
         const pageId = routeInfo[0];
         const subPage = routeInfo[1];
         const queryText = landingPageByIdQuery(pageId);
-        return this.props.gqlClient.query({gqlQuery: queryText})
+        return GqlClient.query({gqlQuery: queryText})
             .then(response => response.json())
             .then(text =>
                 this.setState({"landingPageData": LandingPageData.fromJson(text)}));

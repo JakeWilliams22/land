@@ -5,10 +5,6 @@ import QuestionCard from '../../components/Questions/QuestionCard';
 import Analytics from '../../workers/analytics.js';
 
 class LandingPage extends React.Component {
-    constructor(props) {
-        super(props);
-    }
-
     render = () => (
         <div className="LandingPage">
             <header className="LandingPage-header">
@@ -18,6 +14,7 @@ class LandingPage extends React.Component {
             </header>
             <div className="App-content">
                 <p>{this.props.landingPageData.bodyText}</p>
+
                 {this.props.landingPageData.joinEmailList}
                 <p>Help us build something better</p>
                 {this.props.landingPageData.questionCard}
@@ -41,14 +38,14 @@ class LandingPageData {
         var landingPageData = new LandingPageData();
         var landingPageJson = rawJson.data.landingPage;
         landingPageData.id = landingPageJson.id;
-        //TODO add GA ID
         landingPageData.title = landingPageJson.title;
         landingPageData.subTitle = landingPageJson.subTitle;
         landingPageData.bodyText = landingPageJson.bodyText;
         if (landingPageJson.joinEmailList) {
             landingPageData.joinEmailList = LandingPageData.createJoinEmailListElem(
                 landingPageJson.joinEmailList.joinPrompt,
-                landingPageJson.joinEmailList.joinButtonText);
+                landingPageJson.joinEmailList.joinButtonText,
+                landingPageData.id);
         }
         landingPageData.questionCard =
             LandingPageData.createQuestionCardElem(landingPageJson.questions);
@@ -58,8 +55,11 @@ class LandingPageData {
         return landingPageData;
     };
 
-    static createJoinEmailListElem = (joinPrompt, joinButtonText) => {
-        return (<JoinEmailList joinPrompt={joinPrompt} joinText={joinButtonText}/>)
+    static createJoinEmailListElem = (joinPrompt, joinButtonText, id) => {
+        return (<JoinEmailList
+            joinPrompt={joinPrompt}
+            joinText={joinButtonText}
+            landingPageId={id}/>)
     };
 
     static createQuestionCardElem = (questionJson) => {
