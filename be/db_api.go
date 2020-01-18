@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"log"
 	"strconv"
 )
 
@@ -70,9 +71,14 @@ func getOEQuestions(landingPageId string) []OpenEndedQuestion {
 }
 
 func addEmailSubscriber(email string, landingPageId string) bool {
-	sql := fmt.Sprintf(
-		"INSERT INTO EMAILS VALUES ('%s', '%s', NOW())",
-		email,
-		landingPageId)
-	return insertQuery(db, sql)
+	if valid := validateEmail(email); valid {
+		sql := fmt.Sprintf(
+			"INSERT INTO EMAILS VALUES ('%s', '%s', NOW())",
+			email,
+			landingPageId)
+		return insertQuery(db, sql)
+	} else {
+		log.Printf("Email '%s' is not valid", email)
+	}
+	return false
 }
