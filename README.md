@@ -17,10 +17,13 @@ An landing page customer discovery.
 MVP:
 - Handle Email Join
 - Handle question answering
+- Logo
 - Admin Panel
   - Update landing page attributes
   - Download Email List
   - See question results
+- Landing Page
+- Auth
   
 Bonus:
 - Integrate with Mailchimp
