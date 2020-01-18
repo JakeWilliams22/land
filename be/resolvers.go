@@ -37,8 +37,10 @@ func landingPages() []LandingPage {
 	st1 := "Sing like your favorite fartists"
 	st2 := "Do some durgs"
 
-	bt1 := "You found us while Hummingnerd is still in the Lab! We'll let you know as soon as it's ready!"
-	bt2 := "2You found us while Hummingbird is still in the Lab! We'll let you know as soon as it's ready!"
+	bt1 := "You found us while Hummingnerd is still in the Lab! " +
+		"We'll let you know as soon as it's ready!"
+	bt2 := "2You found us while Hummingbird is still in the Lab! " +
+		"We'll let you know as soon as it's ready!"
 
 	jel1 := JoinEmailList{
 		JoinPrompt:     "Keep up to d8",
@@ -69,7 +71,8 @@ func landingPages() []LandingPage {
 
 func createSchema() graphql.Schema {
 	rootQuery := getRootGQLQuery()
-	schemaConfig := graphql.SchemaConfig{Query: graphql.NewObject(rootQuery)}
+	schemaConfig :=
+		graphql.SchemaConfig{Query: graphql.NewObject(rootQuery)}
 	schema, err := graphql.NewSchema(schemaConfig)
 	if err != nil {
 		log.Fatalf("failed to create new schema, error: %v", err)
@@ -111,7 +114,9 @@ func testAPI() {
 	params := graphql.Params{Schema: schema, RequestString: query}
 	r := graphql.Do(params)
 	if len(r.Errors) > 0 {
-		log.Fatalf("failed to execute graphql operation, errors: %+v", r.Errors)
+		log.Fatalf(
+			"failed to execute graphql operation, errors: %+v",
+			r.Errors)
 	}
 	rJSON, _ := json.Marshal(r)
 	fmt.Printf("\n%s \n", rJSON) // {“data”:{“hello”:”world”}}
