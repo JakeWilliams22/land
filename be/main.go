@@ -13,6 +13,6 @@ func init() {
 func main() {
 	defer db.Close()
 	// testDb()
-	// testAPI()
+	//testAPI()
 	startServer()
 }

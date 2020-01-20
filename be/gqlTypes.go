@@ -10,7 +10,7 @@ var (
 	mcQuestionGraphQL     *graphql.Object
 )
 
-func getRootGQLQuery() graphql.ObjectConfig {
+func getGQLConfigs() (graphql.ObjectConfig, graphql.ObjectConfig) {
 	var joinEmailListGQL = graphql.NewObject(
 		graphql.ObjectConfig{
 			Name: "JoinEmailList",
@@ -165,5 +165,22 @@ func getRootGQLQuery() graphql.ObjectConfig {
 		},
 	}
 
-	return graphql.ObjectConfig{Name: "RootQuery", Fields: rootFields}
+	rootMutationFields :=
+		graphql.Fields{
+			"addEmailSubscriber": &graphql.Field{
+				Type: graphql.Boolean, // the return type for this field
+				Args: graphql.FieldConfigArgument{
+					"email": &graphql.ArgumentConfig{
+						Type: graphql.NewNonNull(graphql.String),
+					},
+					"landingPageId": &graphql.ArgumentConfig{
+						Type: graphql.NewNonNull(graphql.String),
+					},
+				},
+				Resolve: resolveAddEmailSubscriber,
+			},
+		}
+
+	return graphql.ObjectConfig{Name: "RootQuery", Fields: rootFields},
+		graphql.ObjectConfig{Name: "RootMutation", Fields: rootMutationFields}
 }

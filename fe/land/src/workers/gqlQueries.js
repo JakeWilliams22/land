@@ -22,4 +22,14 @@ let landingPageByIdQuery = (pageId) => {
         }`;
 };
 
-export {landingPageByIdQuery};
+
+let addEmailSubscriberQuery = (email, landingPageId) => {
+    return `
+        mutation {
+          addEmailSubscriber(
+            email: "` + email + `", 
+            landingPageId: "` + landingPageId + `")
+        }
+    `
+}
+export {landingPageByIdQuery, addEmailSubscriberQuery};

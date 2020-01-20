@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	"fmt"
 	_ "github.com/go-sql-driver/mysql"
+	"log"
 )
 
 func query(db *sql.DB, query string) *sql.Rows {
@@ -12,6 +13,14 @@ func query(db *sql.DB, query string) *sql.Rows {
 		panic(err)
 	}
 	return result
+}
+
+func insertQuery(db *sql.DB, query string) bool {
+	_, err := db.Query(query)
+	if err != nil {
+		log.Println(err)
+	}
+	return err == nil
 }
 
 func initDb() *sql.DB {

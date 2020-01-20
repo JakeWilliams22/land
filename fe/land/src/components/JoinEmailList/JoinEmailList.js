@@ -2,6 +2,8 @@ import React from 'react';
 import './JoinEmailList.css';
 import Input from '@material-ui/core/Input'
 import Button from '@material-ui/core/Button'
+import GqlClient from "../../workers/gqlClient";
+import {addEmailSubscriberQuery} from "../../workers/gqlQueries";
 
 class JoinEmailList extends React.Component {
     constructor(props) {
@@ -21,6 +23,8 @@ class JoinEmailList extends React.Component {
 
     joinList = () => {
         console.log("Join Email List with email " + this.state.email);
+        return GqlClient.query({gqlQuery:
+            addEmailSubscriberQuery(this.state.email, this.props.landingPageId)})
     };
 
     showThanks = () => {

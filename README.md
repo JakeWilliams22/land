@@ -14,12 +14,14 @@ An landing page customer discovery.
 - Surveymonkey
 
 ## TODO
-MVP:
+MMVP:
 - Handle Email Join
 - Handle question answering
 - Logo
+
+MVP:
 - Admin Panel
-  - Update landing page attributes
+  - Uspdate landing page attributes
   - Download Email List
   - See question results
 - Landing Page

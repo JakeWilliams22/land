@@ -1,6 +1,6 @@
 class GqlClient {
-    GQL_URL = "http://localhost:8080/graphql";
-    query = (query) => {
+    static GQL_URL = "http://localhost:8080/graphql";
+    static query = (query) => {
         return fetch(this.GQL_URL,
             {
                 method: 'POST',
