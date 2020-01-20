@@ -18,13 +18,13 @@ MMVP:
 - Email list download, remove, bulk remove
 - Handle question answering
 - Question Result Viewing
-- Logo download
 
 MVP:
 - Admin Panel
   - Uspdate landing page attributes
   - Download Email List
   - See question results
+  - Logo Upload
 - Landing Page
 - Auth
   
