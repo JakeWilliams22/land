@@ -15,9 +15,10 @@ An landing page customer discovery.
 
 ## TODO
 MMVP:
-- Handle Email Join
+- Email list download, remove, bulk remove
 - Handle question answering
-- Logo
+- Question Result Viewing
+- Logo download
 
 MVP:
 - Admin Panel
@@ -28,6 +29,6 @@ MVP:
 - Auth
   
 Bonus:
-- Integrate with Mailchimp
+- Integrate with Mailchimp (?)
 - Integrate with SurveyMonkey
 - Add basic GA features (like page views)
