@@ -137,6 +137,9 @@ func getGQLConfigs() (graphql.ObjectConfig, graphql.ObjectConfig) {
 				"googleAnalyticsId": &graphql.Field{
 					Type: graphql.String,
 				},
+				"logoName": &graphql.Field{
+					Type: graphql.String,
+				},
 				"joinEmailList": &graphql.Field{
 					Type: joinEmailListGQL,
 				},

@@ -8,6 +8,7 @@ type LandingPage struct {
 	Questions         []Question
 	Id                *string //TODO: Force this to be alphanumeric
 	GoogleAnalyticsId *string
+	LogoName          *string
 }
 
 type QuestionType int32

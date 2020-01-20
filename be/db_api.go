@@ -8,6 +8,8 @@ import (
 
 func getLandingPage(id string) LandingPage {
 	landingPage := getLandingPageBase(id)
+	logoUri := toLogoUrl(*landingPage.LogoName)
+	landingPage.LogoName = &logoUri
 	if joinEmailList, exist := getJoinEmailList(id); exist {
 		landingPage.JoinEmailList = &joinEmailList
 	}
@@ -18,7 +20,8 @@ func getLandingPage(id string) LandingPage {
 }
 
 func getLandingPageBase(id string) LandingPage {
-	result := query(db, "SELECT ID, TITLE, SUB_TITLE, BODY_TEXT, GOOGLE_ANALYTICS_ID FROM LANDING_PAGES WHERE ID = "+id)
+	queryStr := "SELECT ID, TITLE, SUB_TITLE, BODY_TEXT, GOOGLE_ANALYTICS_ID, LOGO_NAME FROM LANDING_PAGES WHERE ID = " + id
+	result := query(db, queryStr)
 	landingPage := parseLandingPageResult(result)[0]
 	return landingPage
 }

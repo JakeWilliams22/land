@@ -1,5 +1,4 @@
 import React from 'react';
-import logo from '../../assets/logo.svg';
 import JoinEmailList from '../../components/JoinEmailList/JoinEmailList';
 import QuestionCard from '../../components/Questions/QuestionCard';
 import Analytics from '../../workers/analytics.js';
@@ -8,7 +7,7 @@ class LandingPage extends React.Component {
     render = () => (
         <div className="LandingPage">
             <header className="LandingPage-header">
-                <img src={logo} alt="logo" width="200px"/>
+                <img src={this.props.landingPageData.logo} alt="logo" width="400px" height="150px"/>
                 <h1>{this.props.landingPageData.title}</h1>
                 <h3>{this.props.landingPageData.subTitle}</h3>
             </header>
@@ -16,7 +15,6 @@ class LandingPage extends React.Component {
                 <p>{this.props.landingPageData.bodyText}</p>
 
                 {this.props.landingPageData.joinEmailList}
-                <p>Help us build something better</p>
                 {this.props.landingPageData.questionCard}
             </div>
         </div>
@@ -41,6 +39,7 @@ class LandingPageData {
         landingPageData.title = landingPageJson.title;
         landingPageData.subTitle = landingPageJson.subTitle;
         landingPageData.bodyText = landingPageJson.bodyText;
+        landingPageData.logo = landingPageJson.logoName;
         if (landingPageJson.joinEmailList) {
             landingPageData.joinEmailList = LandingPageData.createJoinEmailListElem(
                 landingPageJson.joinEmailList.joinPrompt,

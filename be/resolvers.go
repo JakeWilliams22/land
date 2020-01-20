@@ -103,6 +103,7 @@ func testAPI() {
             subTitle
             bodyText
             googleAnalyticsId
+            logoName
             questions {
                 questionPrompt
                 questionType
@@ -125,8 +126,8 @@ func testAPI() {
 	`
 
 	// sssassaxcxdsasuv wefrddssu - Milly the dog
-	fmt.Print(query != "")
-	params := graphql.Params{Schema: schema, RequestString: mutation}
+	fmt.Print(mutation != "")
+	params := graphql.Params{Schema: schema, RequestString: query}
 	r := graphql.Do(params)
 	if len(r.Errors) > 0 {
 		log.Fatalf(
